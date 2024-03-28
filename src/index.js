@@ -3,13 +3,17 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { Provider } from 'react-redux';
 import store from './store';
+import { I18nextProvider } from 'react-i18next';
+import i18n from './i18';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
+  <I18nextProvider i18n={i18n}> {/* Wrap your component tree with I18nextProvider */}
     <App />
-  </Provider>
+  </I18nextProvider>
+</Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
