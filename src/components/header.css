@@ -38,6 +38,11 @@
     font-size: 20px;
 }
 
+a {
+    text-decoration: none;
+    color: black;
+}
+
 .Header-right {
     display: flex;
     flex-direction: row;
@@ -47,6 +52,19 @@
     align-content: center;
 }
 
-.Header-right button{
-    /* margin: 5px; */
+.Header-right button {
+    background: none;
+    border: 1px solid rgba(86, 86, 86, 0.4);
+    cursor: pointer;
+    height: 36px;
+    width: 80px;
+    border-radius: 3px;
+}
+
+.changelang{
+    height: 20px;
+}
+
+.changelang select{
+    border: none;
 }

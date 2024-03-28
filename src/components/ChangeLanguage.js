@@ -1,4 +1,4 @@
-
+import './header.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { setLanguage, selectLanguage } from '../features/languageSlice';
 
@@ -11,7 +11,7 @@ const ChangeLanguage = () => {
   };
 
   return (
-    <div>
+    <div className='changelang'>
       <select id="language" value={currentLanguage} onChange={handleLanguageChange}>
         <option value="en">English</option>
         <option value="ar">Arabic</option>

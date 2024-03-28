@@ -1,3 +1,4 @@
+import './trackingresults.css';
 import { useSelector } from 'react-redux';
 import { selectTrackingData, selectLoading, selectError } from '../features/trackingSlice';
 
@@ -7,7 +8,7 @@ const TrackingResults = () => {
   const error = useSelector(selectError);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div></div>;
   }
 
   if (error) {
@@ -15,26 +16,21 @@ const TrackingResults = () => {
   }
 
   if (!trackingData) {
-    return <div>No tracking data available</div>;
+    return <div></div>;
   }
 
-  
-  // Filter the transit events based on specific states
-  const filteredEvents = trackingData.TransitEvents.filter(event =>
-    ['TICKET_CREATED', 'OUT_FOR_DELIVERY' , 'DELIVERED'].includes(event.state)
-  );
 
   // Find the index of the 'TICKET_CREATED' event
   const ticketCreatedIndex = trackingData.TransitEvents.findIndex(event =>
     event.state === 'TICKET_CREATED'
   );
-  
+
   // Find the index of the next 'PACKAGE_RECEIVED' event after 'TICKET_CREATED'
   const packageReceivedIndex = trackingData.TransitEvents.findIndex((event, index) =>
     index > ticketCreatedIndex && event.state === 'PACKAGE_RECEIVED'
   );
 
-  
+
   // Get the 'TICKET_CREATED' event and 'PACKAGE_RECEIVED' event if found
   const ticketCreatedEvent = ticketCreatedIndex !== -1 ? trackingData.TransitEvents[ticketCreatedIndex] : null;
   const packageReceivedEvent = packageReceivedIndex !== -1 ? trackingData.TransitEvents[packageReceivedIndex] : null;
@@ -67,55 +63,103 @@ const TrackingResults = () => {
       )} */}
 
 
-<h2>Tracking Number: {trackingData.TrackingNumber}</h2>
-      <p>Status: {trackingData.CurrentStatus.state}</p>
-      <p>Receiving Date: {new Date(trackingData.PromisedDate).toLocaleString()}</p>
+      <div className='trackinginfo'>
 
-      <h2>Transit Events</h2>
+        <div className='lineone'>
+          <p>Ship Number {trackingData.TrackingNumber}</p>
+          <p>Last Update</p>
+          <p>Vendor Name</p>
+          <p>Time to receive</p>
+        </div>
+
+        <div className='linetwo'>
+          <p>{trackingData.CurrentStatus.state}</p>
+          <p>{new Date().toDateString()}</p>
+          <p>Souq.com</p>
+          <p>{new Date(trackingData.PromisedDate).toLocaleString()}</p>
+        </div>
+
+
+      </div>
+
+      <p>Transit Details</p>
       <table>
         <thead>
           <tr>
-            <th>State</th>
-            <th>Timestamp</th>
             <th>Hub</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Details</th>
           </tr>
         </thead>
         <tbody>
-         
+
           {ticketCreatedEvent && (
             <tr key={ticketCreatedEvent.timestamp}>
+              <td>
+                {trackingData.TransitEvents
+                  .slice()
+                  .reverse()
+                  .map(event => event.hub && event.hub.split(' ')[0])
+                  .find(hub => hub) || ''}
+              </td>
+              {/* Adding null check for deliveredEvent.timestamp */}
+              <td>{deliveredEvent && deliveredEvent.timestamp ? new Date(deliveredEvent.timestamp).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : '-'}</td>
+              <td>{new Date(ticketCreatedEvent.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
               <td>{ticketCreatedEvent.state}</td>
-              <td>{new Date(ticketCreatedEvent.timestamp).toLocaleString()}</td>
-              <td>{ticketCreatedEvent.hub || '-'}</td>
             </tr>
           )}
           {packageReceivedEvent ? (
             <tr key={packageReceivedEvent.timestamp}>
+              <td>
+                {trackingData.TransitEvents
+                  .slice()
+                  .reverse()
+                  .map(event => event.hub && event.hub.split(' ')[0])
+                  .find(hub => hub) || ''}
+              </td>
+              {/* Adding null check for deliveredEvent.timestamp */}
+              <td>{deliveredEvent && deliveredEvent.timestamp ? new Date(deliveredEvent.timestamp).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : '-'}</td>
+              <td>{new Date(packageReceivedEvent.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
               <td>{packageReceivedEvent.state}</td>
-              <td>{new Date(packageReceivedEvent.timestamp).toLocaleString()}</td>
-              <td>{packageReceivedEvent.hub || '-'}</td>
             </tr>
           ) : (
             <tr>
-              <td colSpan="3">No 'PACKAGE_RECEIVED' event found after 'TICKET_CREATED'</td>
+              <td colSpan="3"></td>
             </tr>
           )}
           {outForDeliveryEvent && (
             <tr key={outForDeliveryEvent.timestamp}>
+              <td>
+                {trackingData.TransitEvents
+                  .slice()
+                  .reverse()
+                  .map(event => event.hub && event.hub.split(' ')[0])
+                  .find(hub => hub) || ''}
+              </td>
+              {/* Adding null check for deliveredEvent.timestamp */}
+              <td>{deliveredEvent && deliveredEvent.timestamp ? new Date(deliveredEvent.timestamp).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : '-'}</td>
+              <td>{new Date(outForDeliveryEvent.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
               <td>{outForDeliveryEvent.state}</td>
-              <td>{new Date(outForDeliveryEvent.timestamp).toLocaleString()}</td>
-              <td>{outForDeliveryEvent.hub || '-'}</td>
             </tr>
           )}
           {deliveredEvent ? (
             <tr key={deliveredEvent.timestamp}>
+              <td>
+                {trackingData.TransitEvents
+                  .slice()
+                  .reverse()
+                  .map(event => event.hub && event.hub.split(' ')[0])
+                  .find(hub => hub) || '-'}
+              </td>
+              {/* Adding null check for deliveredEvent.timestamp */}
+              <td>{deliveredEvent && deliveredEvent.timestamp ? new Date(deliveredEvent.timestamp).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : '-'}</td>
+              <td>{new Date(deliveredEvent.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
               <td>{deliveredEvent.state}</td>
-              <td>{new Date(deliveredEvent.timestamp).toLocaleString()}</td>
-              <td>{deliveredEvent.hub || '-'}</td>
             </tr>
           ) : (
             <tr>
-              <td colSpan="3">No 'DELIVERED' event found after 'OUT_FOR_DELIVERY'</td>
+              <td colSpan="3"></td>
             </tr>
           )}
         </tbody>

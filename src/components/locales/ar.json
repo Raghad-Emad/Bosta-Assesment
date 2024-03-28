@@ -1,0 +1,16 @@
+{
+    "translation": {
+      "shipNumber": "رقم الشحنة",
+      "lastUpdate": "آخر تحديث",
+      "vendorName": "اسم البائع",
+      "timeToReceive": "الوقت لتلقي",
+      "status": "الحالة",
+      "souq": "سوق.كوم",
+      "transitDetails": "تفاصيل العبور",
+      "hub": "مركز",
+      "date": "التاريخ",
+      "time": "الوقت",
+      "details": "تفاصيل"
+    }
+  }
+  

@@ -1,0 +1,16 @@
+{
+    "translation": {
+      "shipNumber": "Ship Number",
+      "lastUpdate": "Last Update",
+      "vendorName": "Vendor Name",
+      "timeToReceive": "Time to receive",
+      "status": "Status",
+      "souq": "Souq.com",
+      "transitDetails": "Transit Details",
+      "hub": "Hub",
+      "date": "Date",
+      "time": "Time",
+      "details": "Details"
+    }
+  }
+  

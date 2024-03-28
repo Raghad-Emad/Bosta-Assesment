@@ -1,12 +1,15 @@
-import './header.css'
-import Logo from '../assets/Bosta-logo.png'
+import './header.css';
+import Logo from '../assets/Bosta-logo.png';
+import TrackingForm from './TrackingForm';
+import ChangeLanguage from './ChangeLanguage';
+
 
 function Header() {
   return (
     <div className='Header'>
 
       <div className='Logo'>
-        <a>
+        <a href='#'>
           <img src={Logo} alt='Logo' />
         </a>
         <p>Bosta</p>
@@ -14,16 +17,16 @@ function Header() {
 
       <div className='Header-center'>
         <ul>
-          <li>Main</li>
-          <li>Prices</li>
-          <li>Sales</li>
+          <li><a href='#'>Main</a></li>
+          <li><a href='#'>Prices</a></li>
+          <li><a href='#'>Sales</a></li>
         </ul>
       </div>
 
       <div className='Header-right'>
-        <button>track ship</button>
+        <TrackingForm/>
         <button>log in</button>
-        <button>En</button>
+        <ChangeLanguage className='ChangeLanguage'/>
       </div>
 
 
